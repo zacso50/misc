@@ -2398,6 +2398,10 @@ function RayfieldLibrary:CreateWindow(Settings)
 				Divider.Visible = Value
 			end
 
+			function DividerValue:Remove()
+				Divider:Destroy()
+			end
+
 			return DividerValue
 		end
 
