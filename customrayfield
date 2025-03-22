@@ -2045,7 +2045,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 
 
 			Button.Interact.MouseButton1Click:Connect(function()
-				if not Button or Button == nil or not Button.ElementIndicator then
+				if not Button or Button == nil or Button.ElementIndicator == nil or not Button:FindFirstChild("ElementIndicator") then
 					return
 				end
 				local Success, Response = pcall(ButtonSettings.Callback)
