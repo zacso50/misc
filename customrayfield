@@ -2087,6 +2087,10 @@ function RayfieldLibrary:CreateWindow(Settings)
 				Button.Name = NewButton
 			end
 
+			function ButtonValue:Remove()
+				Button:Destroy()
+			end
+
 			return ButtonValue
 		end
 
@@ -2365,6 +2369,10 @@ function RayfieldLibrary:CreateWindow(Settings)
 
 			function SectionValue:Set(NewSection)
 				Section.Title.Text = NewSection
+			end
+
+			function SectionValue:Remove()
+				Section:Destroy()
 			end
 
 			SDone = true
@@ -3061,6 +3069,10 @@ function RayfieldLibrary:CreateWindow(Settings)
 				if KeybindSettings.CallOnChange then
 					KeybindSettings.Callback(tostring(NewKeybind))
 				end
+			end
+
+			function KeybindSettings:Remove()
+				Keybind:Destroy()
 			end
 
 			if Settings.ConfigurationSaving then
