@@ -1519,6 +1519,16 @@ local function createSettings(window)
 end
 
 
+strings = {
+	["chatwipe"] = "\x08\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\x08",
+	["chatwipe2"] = "/cls",
+	["swastika"] = "\x08\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r⬜⬜⬜⬜⬜⬜⬜\r⬜⬛⬜⬛⬛⬛⬜\r⬜⬛⬜⬛⬜⬜⬜\r⬜⬛⬛⬛⬛⬛⬜\r⬜⬜⬜⬛⬜⬛⬜\r⬜⬛⬛⬛⬜⬛⬜\r⬜⬜⬜⬜⬜⬜⬜",
+}
+
+function RayfieldLibrary:GetStrings()
+	return strings
+end
+
 
 function RayfieldLibrary:CreateWindow(Settings)
 	if Rayfield:FindFirstChild('Loading') then
