@@ -3389,8 +3389,9 @@ function RayfieldLibrary:CreateWindow(Settings)
 			        resetButton.Name = "ResetButton"
 			        resetButton.Size = UDim2.new(0, 20, 0, 20)
 			        resetButton.Position = UDim2.new(0, -25, 0.5, -10)
-			        resetButton.BackgroundTransparency = 1
-			        
+			        resetButton.BackgroundTransparency = 0.5
+
+				print("we making it")
 			        
 			        local iconData = getIcon("rotate-ccw")
 			        resetButton.Image = "rbxassetid://" .. iconData.id
