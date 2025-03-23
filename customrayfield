@@ -3385,7 +3385,6 @@ function RayfieldLibrary:CreateWindow(Settings)
 				end)
 			end)
 
-			print("blah")
 
 			if SliderSettings.ResetCallback then
 				local resetFrame = Instance.new("Frame")
