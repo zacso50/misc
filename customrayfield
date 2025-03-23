@@ -2689,6 +2689,9 @@ function RayfieldLibrary:CreateWindow(Settings)
 			Dropdown.Toggle.Rotation = 180
 
 			Dropdown.Interact.MouseButton1Click:Connect(function()
+				if DropdownSettings.OpenCallback then
+					DropdownSettings:OpenCallback()
+				end
 				TweenService:Create(Dropdown, TweenInfo.new(0.4, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
 				TweenService:Create(Dropdown.UIStroke, TweenInfo.new(0.4, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
 				task.wait(0.1)
@@ -2868,6 +2871,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 					end)
 				end
 			end
+
 
 			function DropdownSettings:Set(NewOption)
 				DropdownSettings.CurrentOption = NewOption
