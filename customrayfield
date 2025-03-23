@@ -1533,7 +1533,8 @@ end
 function RayfieldLibrary:CreateWindow(Settings)
 	if Rayfield:FindFirstChild('Loading') then
 		if getgenv and not getgenv().rayfieldCached then
-			task.wait(1.4)
+			--loading dock
+			task.wait(0.4)
 		end
 	end
 
@@ -3387,34 +3388,54 @@ function RayfieldLibrary:CreateWindow(Settings)
 			print("blah")
 
 			if SliderSettings.ResetCallback then
-			        local resetButton = Instance.new("ImageButton")
-			        resetButton.Name = "ResetButton"
-				resetButton.AnchorPoint = Vector2.new(1, 0.5)
-			        resetButton.Size = UDim2.new(0, 28, 0, 28)
-			        resetButton.Position = UDim2.new(0.5, -10, 0.5, 0)
-			        resetButton.BackgroundTransparency = 0.8
-				resetButton.BackgroundColor3 = Color3.fromRGB(50, 138, 220)
+				local resetFrame = Instance.new("Frame")
+				resetFrame.Name = "ResetFrame"
+				resetFrame.AnchorPoint = Vector2.new(1, 0.5)
+				resetFrame.Size = UDim2.new(0, 29, 0, 29)
+				resetFrame.Position = UDim2.new(0.5, -10, 0.5, 0)
+				resetFrame.BackgroundTransparency = 0.8
+				resetFrame.BackgroundColor3 = Color3.fromRGB(50, 138, 220)
 
-				local stroke = Instance.new("UIStroke", resetButton)
+				local stroke = Instance.new("UIStroke", resetFrame)
 				stroke.Thickness = 1.2
 				stroke.Transparency = 0.4
 				stroke.Color = Color3.fromRGB(50, 138, 220)
+				
 
-				local corner = Instance.new("UICorner", resetButton)
-				corner.CornerRadius = UDim.new(1,0)
-			        
-			        local iconData = getIcon("rotate-ccw")
-			        resetButton.Image = "rbxassetid://" .. iconData.id
-			        resetButton.ImageRectOffset = iconData.imageRectOffset
-			        resetButton.ImageRectSize = iconData.imageRectSize
-			        
-			        resetButton.MouseButton1Click:Connect(function()
-			            pcall(SliderSettings.ResetCallback)
+				local corner = Instance.new("UICorner", resetFrame)
+				corner.CornerRadius = UDim.new(1, 0)
+	
+				local iconData = getIcon("rotate-ccw")
+				local icon = Instance.new("ImageLabel")
+				icon.Name = "Icon"
+				icon.ImageColor3 = Color3.fromRGB(237,237,237)
+				icon.Size = UDim2.new(0, 18, 0, 18)
+				icon.AnchorPoint = Vector2.new(0.5, 0.5)
+				icon.Position = UDim2.new(0.5, 0, 0.5, 0) 
+				icon.BackgroundTransparency = 1
+				icon.Image = "rbxassetid://" .. iconData.id
+				icon.ImageRectOffset = iconData.imageRectOffset
+				icon.ImageRectSize = iconData.imageRectSize
+				icon.Parent = resetFrame
+	
+				local triggerButton = Instance.new("ImageButton")
+				triggerButton.Name = "TriggerButton"
+				triggerButton.Size = UDim2.new(1, 0, 1, 0)
+				triggerButton.BackgroundTransparency = 1
+				triggerButton.AutoButtonColor = false
+				triggerButton.Image = "http://www.roblox.com/asset/?id=1637055766"
+				triggerButton.Parent = resetFrame
+				
+
+				triggerButton.MouseButton1Click:Connect(function()
+				    pcall(SliderSettings.ResetCallback)
 				    TweenService:Create(stroke, TweenInfo.new(0.4, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
 				    wait(0.35)
 				    TweenService:Create(stroke, TweenInfo.new(0.4, Enum.EasingStyle.Exponential), {Transparency = 0.4}):Play()
-			        end)
-			        resetButton.Parent = Slider
+				end)
+				
+				resetFrame.Parent = Slider
+
 		       end
 
 			function SliderSettings:Set(NewVal)
