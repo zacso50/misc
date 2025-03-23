@@ -3389,7 +3389,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 			if SliderSettings.ResetCallback then
 			        local resetButton = Instance.new("ImageButton")
 			        resetButton.Name = "ResetButton"
-			        resetButton.Size = UDim2.new(0, 20, 0, 20)
+			        resetButton.Size = UDim2.new(0.5, -10, 0.5, 0)
 			        resetButton.Position = UDim2.new(0, -25, 0.5, -10)
 			        resetButton.BackgroundTransparency = 0.5
 
