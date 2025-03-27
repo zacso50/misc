@@ -1,0 +1,337 @@
+local function createAnimationUI(animations, callback, theme)
+	local TweenService = game:GetService("TweenService")
+	local ui = Instance.new("ScreenGui")
+	ui.Name = "AnimationUI"
+	ui.DisplayOrder = 100
+	ui.ResetOnSpawn = false
+
+	local main = Instance.new("Frame")
+	main.Name = "Main"
+	main.Parent = ui
+	main.AnchorPoint = Vector2.new(0.5, 0.5)
+	main.BackgroundColor3 = theme and theme.Background or Color3.fromRGB(25, 25, 25)
+	main.BorderColor3 = Color3.fromRGB(27, 42, 53)
+	main.BorderSizePixel = 0
+	main.Position = UDim2.new(0.5, 0, 0.5, 0)
+	main.Size = UDim2.new(0, 500, 0, 475)
+
+	local uiCorner = Instance.new("UICorner")
+	uiCorner.CornerRadius = UDim.new(0, 15)
+	uiCorner.Parent = main
+
+	local elements = Instance.new("Frame")
+	elements.Name = "Elements"
+	elements.Parent = main
+	elements.AnchorPoint = Vector2.new(0.5, 1)
+	elements.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	elements.BackgroundTransparency = 1
+	elements.BorderColor3 = Color3.fromRGB(27, 42, 53)
+	elements.BorderSizePixel = 0
+	elements.ClipsDescendants = true
+	elements.Position = UDim2.new(0.5, 0, 1, 0)
+	elements.Size = UDim2.new(1, 0, 0.999, -100)
+	
+
+	local template = Instance.new("ScrollingFrame")
+	template.Name = "Template"
+	template.Parent = elements
+	template.Active = true
+	template.AnchorPoint = Vector2.new(0.5, 0.5)
+	template.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	template.BackgroundTransparency = 1
+	template.BorderColor3 = Color3.fromRGB(27, 42, 53)
+	template.BorderSizePixel = 0
+	template.Position = UDim2.new(0.5, 0, 0.5, 0)
+	template.Size = UDim2.new(1, -25, 1, 0)
+	template.CanvasSize = UDim2.new(0, 0, 0, 0)
+	template.ScrollBarThickness = 0
+	
+	local padding = Instance.new("UIPadding", template)
+	padding.PaddingTop = UDim.new(0,5)
+
+	local uiListLayout = Instance.new("UIListLayout")
+	uiListLayout.Parent = template
+	uiListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+	uiListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	uiListLayout.Padding = UDim.new(0, 6)
+
+	local buttonTemplate = Instance.new("Frame")
+	buttonTemplate.Name = "Button"
+	buttonTemplate.Parent = template
+	buttonTemplate.BackgroundColor3 = theme and theme.ElementBackground or Color3.fromRGB(35, 35, 35)
+	buttonTemplate.BorderColor3 = Color3.fromRGB(27, 42, 53)
+	buttonTemplate.BorderSizePixel = 0
+	buttonTemplate.Size = UDim2.new(1, -10, 0, 35)
+
+	local btnStroke = Instance.new("UIStroke")
+	btnStroke.Thickness = 1
+	btnStroke.Color = theme and theme.ElementStroke or Color3.fromRGB(50, 50, 50)
+	btnStroke.Parent = buttonTemplate
+
+	local uiCorner2 = Instance.new("UICorner")
+	uiCorner2.CornerRadius = UDim.new(0, 9)
+	uiCorner2.Parent = buttonTemplate
+
+	local title = Instance.new("TextLabel")
+	title.Name = "Title"
+	title.Parent = buttonTemplate
+	title.AnchorPoint = Vector2.new(0, 0.5)
+	title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	title.BackgroundTransparency = 1
+	title.BorderColor3 = Color3.fromRGB(27, 42, 53)
+	title.BorderSizePixel = 0
+	title.Position = UDim2.new(0, 15, 0.5, 0)
+	title.Size = UDim2.new(0, 315, 0, 14)
+	title.Font = Enum.Font.GothamMedium
+	title.Text = "AnimationName"
+	title.TextColor3 = theme and theme.TextColor or Color3.fromRGB(240, 240, 240)
+	title.TextSize = 14
+	title.TextWrapped = true
+	title.TextXAlignment = Enum.TextXAlignment.Left
+
+	local Search = Instance.new("Frame")
+	local UICornerSearch = Instance.new("UICorner")
+	local Search_2 = Instance.new("ImageLabel")
+	local InputSearch = Instance.new("TextBox")
+	local ShadowSearch = Instance.new("ImageLabel")
+
+	Search.Name = "Search"
+	Search.Parent = main
+	Search.AnchorPoint = Vector2.new(0.5, 0)
+	Search.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Search.BackgroundTransparency = 0.9
+	Search.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Search.BorderSizePixel = 0
+	Search.Position = UDim2.new(0.5, 0, 0, 57)
+	Search.Size = UDim2.new(1, -35, 0, 35)
+	Search.ZIndex = 10
+
+	UICornerSearch.CornerRadius = UDim.new(1, 0)
+	UICornerSearch.Parent = Search
+
+	Search_2.Name = "Search"
+	Search_2.Parent = Search
+	Search_2.AnchorPoint = Vector2.new(0, 0.5)
+	Search_2.BackgroundTransparency = 1
+	Search_2.Position = UDim2.new(0, 15, 0.5, 1)
+	Search_2.Size = UDim2.new(0, 16, 0, 16)
+	Search_2.ZIndex = 10
+	Search_2.Image = "rbxassetid://18458939117"
+	Search_2.ImageTransparency = 0.65
+
+	InputSearch.Name = "InputSearch"
+	InputSearch.Parent = Search
+	InputSearch.AnchorPoint = Vector2.new(0, 0.5)
+	InputSearch.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	InputSearch.BackgroundTransparency = 1
+	InputSearch.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	InputSearch.BorderSizePixel = 0
+	InputSearch.ClipsDescendants = true
+	InputSearch.Position = UDim2.new(0, 40, 0.5, 0)
+	InputSearch.Size = UDim2.new(1, -110, 0, 18)
+	InputSearch.ZIndex = 10
+	InputSearch.ClearTextOnFocus = false
+	InputSearch.FontFace = Font.fromName("Inter")
+	InputSearch.PlaceholderColor3 = Color3.fromRGB(178, 178, 178)
+	InputSearch.PlaceholderText = "Search"
+	InputSearch.Text = ""
+	InputSearch.TextColor3 = Color3.fromRGB(255, 255, 255)
+	InputSearch.TextSize = 16
+	InputSearch.TextTransparency = 0.2
+	InputSearch.TextWrapped = true
+	InputSearch.TextXAlignment = Enum.TextXAlignment.Left
+
+	ShadowSearch.Name = "ShadowSearch"
+	ShadowSearch.Parent = Search
+	ShadowSearch.AnchorPoint = Vector2.new(0.5, 0.5)
+	ShadowSearch.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	ShadowSearch.BackgroundTransparency = 1
+	ShadowSearch.BorderColor3 = Color3.fromRGB(27, 42, 53)
+	ShadowSearch.BorderSizePixel = 0
+	ShadowSearch.Position = UDim2.new(0.5, 0, 0.528571427, 0)
+	ShadowSearch.Size = UDim2.new(1.45, 0, 1.6, 0)
+	ShadowSearch.ZIndex = 5
+	ShadowSearch.Image = "rbxassetid://5587865193"
+	ShadowSearch.ImageTransparency = 0.95
+
+	local stroke = Instance.new("UIStroke", Search)
+	stroke.Color = Color3.fromRGB(255, 255, 255)
+	stroke.Thickness = 1
+	stroke.Transparency = 0.8
+
+	local elementIndicator = Instance.new("TextLabel")
+	elementIndicator.Name = "ElementIndicator"
+	elementIndicator.Parent = buttonTemplate
+	elementIndicator.AnchorPoint = Vector2.new(1, 0.5)
+	elementIndicator.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	elementIndicator.BackgroundTransparency = 1
+	elementIndicator.BorderColor3 = Color3.fromRGB(27, 42, 53)
+	elementIndicator.BorderSizePixel = 0
+	elementIndicator.Position = UDim2.new(1, -10, 0.507, 0)
+	elementIndicator.Size = UDim2.new(0, 99, 0, 13)
+	elementIndicator.Font = Enum.Font.GothamMedium
+	elementIndicator.Text = "load"
+	elementIndicator.TextColor3 = theme and theme.TextColor or Color3.fromRGB(240, 240, 240)
+	elementIndicator.TextScaled = true
+	elementIndicator.TextSize = 14
+	elementIndicator.TextTransparency = 0.9
+	elementIndicator.TextWrapped = true
+	elementIndicator.TextXAlignment = Enum.TextXAlignment.Right
+
+	local interact = Instance.new("TextButton")
+	interact.Name = "Interact"
+	interact.Parent = buttonTemplate
+	interact.AnchorPoint = Vector2.new(0.5, 0.5)
+	interact.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	interact.BackgroundTransparency = 1
+	interact.BorderColor3 = Color3.fromRGB(27, 42, 53)
+	interact.BorderSizePixel = 0
+	interact.Position = UDim2.new(0.5, 0, 0.5, 0)
+	interact.Size = UDim2.new(1, 0, 1, 0)
+	interact.ZIndex = 5
+	interact.Font = Enum.Font.SourceSans
+	interact.Text = ""
+	interact.TextColor3 = Color3.fromRGB(0, 0, 0)
+	interact.TextSize = 14
+	interact.TextTransparency = 1
+
+	local topbar = Instance.new("Frame")
+	topbar.Name = "Topbar"
+	topbar.Parent = main
+	topbar.BackgroundColor3 = theme and theme.Topbar or Color3.fromRGB(34, 34, 34)
+	topbar.BorderColor3 = Color3.fromRGB(27, 42, 53)
+	topbar.BorderSizePixel = 0
+	topbar.Size = UDim2.new(1, 0, 0, 45)
+	topbar.ZIndex = 5
+
+	local uiCorner3 = Instance.new("UICorner")
+	uiCorner3.CornerRadius = UDim.new(0, 15)
+	uiCorner3.Parent = topbar
+
+	local cornerRepair = Instance.new("Frame")
+	cornerRepair.Name = "CornerRepair"
+	cornerRepair.Parent = topbar
+	cornerRepair.AnchorPoint = Vector2.new(0.5, 0.5)
+	cornerRepair.BackgroundColor3 = theme and theme.Topbar or Color3.fromRGB(34, 34, 34)
+	cornerRepair.BorderColor3 = Color3.fromRGB(27, 42, 53)
+	cornerRepair.BorderSizePixel = 0
+	cornerRepair.Position = UDim2.new(0.5, 0, 0.84, 0)
+	cornerRepair.Size = UDim2.new(1, 0, 0.32, 0)
+	cornerRepair.ZIndex = 4
+
+	local title2 = Instance.new("TextLabel")
+	title2.Name = "Title"
+	title2.Parent = topbar
+	title2.AnchorPoint = Vector2.new(0, 0.5)
+	title2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	title2.BackgroundTransparency = 1
+	title2.BorderColor3 = Color3.fromRGB(27, 42, 53)
+	title2.BorderSizePixel = 0
+	title2.Position = UDim2.new(0, 17, 0.5, 0)
+	title2.Size = UDim2.new(0, 338, 0, 16)
+	title2.ZIndex = 5
+	title2.Font = Enum.Font.MontserratBold
+	title2.Text = "Animations"
+	title2.TextColor3 = theme and theme.TextColor or Color3.fromRGB(240, 240, 240)
+	title2.TextScaled = true
+	title2.TextSize = 14
+	title2.TextWrapped = true
+	title2.TextXAlignment = Enum.TextXAlignment.Left
+
+	local hide = Instance.new("ImageButton")
+	hide.Name = "Hide"
+	hide.Parent = topbar
+	hide.AnchorPoint = Vector2.new(1, 0.5)
+	hide.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	hide.BackgroundTransparency = 1
+	hide.BorderColor3 = Color3.fromRGB(27, 42, 53)
+	hide.BorderSizePixel = 0
+	hide.Position = UDim2.new(1, -15, 0.5, 0)
+	hide.Size = UDim2.new(0, 24, 0, 24)
+	hide.ZIndex = 5
+	hide.Image = "http://www.roblox.com/asset/?id=10137832201"
+	hide.ImageColor3 = theme and theme.TextColor or Color3.fromRGB(240, 240, 240)
+	hide.ImageTransparency = 0.8
+	hide.ScaleType = Enum.ScaleType.Fit
+	hide.MouseEnter:Connect(function()
+		TweenService:Create(hide, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {ImageTransparency = 0}):Play()
+	end)
+	hide.MouseLeave:Connect(function()
+		TweenService:Create(hide, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {ImageTransparency = 0.8}):Play()
+	end)
+	hide.MouseButton1Click:Connect(function()
+		ui:Destroy()
+	end)
+
+	local templateButton = buttonTemplate:Clone()
+	buttonTemplate:Destroy()
+
+	for name, id in pairs(animations) do
+		local btn = templateButton:Clone()
+		btn.Title.Text = name
+		btn.Interact.MouseButton1Click:Connect(function()
+			callback(id)
+		end)
+		btn.MouseEnter:Connect(function()
+			TweenService:Create(btn, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {BackgroundColor3 = theme and theme.ElementBackgroundHover or btn.BackgroundColor3}):Play()
+			btn.BackgroundColor3 = theme and theme.ElementBackgroundHover or btn.BackgroundColor3
+		end)
+		btn.MouseLeave:Connect(function()
+			TweenService:Create(btn, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {BackgroundColor3 = theme and theme.ElementBackground or btn.BackgroundColor3}):Play()
+		end)
+		btn.Parent = template
+	end
+
+	local canvasHeight = uiListLayout.AbsoluteContentSize.Y + uiListLayout.Padding.Offset
+	template.CanvasSize = UDim2.new(0, 0, 0, canvasHeight)
+
+	InputSearch:GetPropertyChangedSignal("Text"):Connect(function()
+		local searchQuery = string.lower(InputSearch.Text)
+		for _, btn in ipairs(template:GetChildren()) do
+			if btn:IsA("Frame") then
+				local titleLabel = btn:FindFirstChild("Title")
+				if titleLabel then
+					local btnText = string.lower(titleLabel.Text)
+					btn.Visible = string.find(btnText, searchQuery) and true or false
+				end
+			end
+		end
+	end)
+
+	local UserInputService = game:GetService("UserInputService")
+	local RunService = game:GetService("RunService")
+	local GuiService = game:GetService("GuiService")
+	local function makeDraggable(object, dragObject)
+		local dragging = false
+		local relative = nil
+		local offset = Vector2.new(0, 0)
+		local screenGui = object:FindFirstAncestorWhichIsA("ScreenGui")
+		if screenGui and screenGui.IgnoreGuiInset then
+			offset = offset + GuiService:GetGuiInset()
+		end
+		dragObject.InputBegan:Connect(function(input, processed)
+			if processed then return end
+			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+				dragging = true
+				relative = object.AbsolutePosition + (object.AbsoluteSize * object.AnchorPoint) - UserInputService:GetMouseLocation()
+			end
+		end)
+		UserInputService.InputEnded:Connect(function(input)
+			if dragging and (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then
+				dragging = false
+			end
+		end)
+		RunService.RenderStepped:Connect(function()
+			if dragging then
+				local position = UserInputService:GetMouseLocation() + relative + offset
+				object.Position = UDim2.fromOffset(position.X, position.Y)
+			end
+		end)
+	end
+
+	makeDraggable(main, topbar)
+	ui.Parent = game:GetService("CoreGui")
+	return ui
+end
+
+return createAnimationUI
